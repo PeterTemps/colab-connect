@@ -12,8 +12,23 @@ message = """
 """.strip()
 
 
-def start_tunnel() -> None:
-    command = "./code tunnel --accept-server-license-terms --name colab-connect"
+def start_tunnel(server_data_dir: str = None, extensions_dir: str = None) -> None:
+    """
+    Start the tunnel to connect to the server
+    Args:"
+    "server_data_dir: str: The directory to store the server data
+    "extensions_dir: str: The directory to store the extensions
+    """
+    if server_data_dir is None:
+        server_data_dir = "/content/drive/MyDrive/colab/vscode-server"
+    if extensions_dir is None:
+        extensions_dir = "/content/drive/MyDrive/colab/vscode-extensions"
+    # Create the directories if they don't exist
+    Path(server_data_dir).mkdir(parents=True, exist_ok=True)
+    Path(extensions_dir).mkdir(parents=True, exist_ok=True)
+    # Set the environment variables
+    
+    command = f"./code tunnel --accept-server-license-terms --name colab-connect --server-data-dir {server_data_dir} --extensions-dir {extensions_dir}"
     p = subprocess.Popen(
         command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT
     )
