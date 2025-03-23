@@ -25,10 +25,14 @@ def start_tunnel(server_data_dir: str = None, extensions_dir: str = None) -> Non
         extensions_dir = "/content/drive/MyDrive/colab/vscode-extensions"
     # Create the directories if they don't exist
     Path(server_data_dir).mkdir(parents=True, exist_ok=True)
+    print(f"Server data dir: {server_data_dir}")
     Path(extensions_dir).mkdir(parents=True, exist_ok=True)
+    print(f"Extensions dir: {extensions_dir}")
     # Set the environment variables
     
     command = f"./code tunnel --accept-server-license-terms --name colab-connect --server-data-dir {server_data_dir} --extensions-dir {extensions_dir}"
+    print(f"Running command: {command}")
+    # Run the command
     p = subprocess.Popen(
         command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT
     )
